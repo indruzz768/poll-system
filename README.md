@@ -27,13 +27,6 @@ This is a full-stack poll management web application built as part of a machine 
 
 ---
 
-### 🌟 Bonus Features (Implemented)
-
-- [ ] Multiple active polls
-- [ ] Poll expiry dates
-- [ ] "My Votes" section
-- [ ] Export results as CSV
-
 
 ---
 
