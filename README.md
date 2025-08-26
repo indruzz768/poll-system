@@ -72,3 +72,10 @@ Open http://127.0.0.1:8000 in your browser.
 🔐 Admin Access
 Username: indran
 Password: 123
+
+Url Endpoints to Test
+
+http://127.0.0.1:8000/ - list Polls
+poll/1/                - detail of a poll
+poll/1/vote/           - to vote for the specific poll
+poll/1/results/        - to see results
