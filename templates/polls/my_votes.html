@@ -1,0 +1,31 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+<h2>My Votes</h2>
+
+{% if votes %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Poll</th>
+        <th>Your Choice</th>
+        <th>Voted On</th>
+        <th>Results</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for vote in votes %}
+      <tr>
+        <td>{{ vote.poll.question }}</td>
+        <td>{{ vote.option.text }}</td>
+        <td>{{ vote.created_at|date:"Y-m-d H:i" }}</td>
+        <td><a href="{% url 'polls:poll_results' vote.poll.pk %}">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>You haven't voted in any polls yet.</p>
+{% endif %}
+
+<a href="{% url 'polls:poll_list' %}" class="btn btn-link mt-3">Back to Polls</a>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+<h2>{{ poll.question }}</h2>
+
+{% if user_voted %}
+  <div class="alert alert-info">You already voted. <a href="{% url 'polls:poll_results' poll.pk %}">See results</a></div>
+{% else %}
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'polls:poll_vote' poll.pk %}">
+      {% csrf_token %}
+      {% for opt in poll.options.all %}
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="option" id="opt{{ opt.pk }}" value="{{ opt.pk }}">
+          <label class="form-check-label" for="opt{{ opt.pk }}">{{ opt.text }}</label>
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary mt-2" type="submit">Vote</button>
+    </form>
+  {% else %}
+    <p>Please <a href="{% url 'login' %}?next={% url 'polls:poll_detail' poll.pk %}">login</a> to vote.</p>
+  {% endif %}
+{% endif %}
+{% endblock %}

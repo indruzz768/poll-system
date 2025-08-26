@@ -1,0 +1,57 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<h2>Results: {{ poll.question }}</h2>
+<p>Total votes: <strong>{{ total }}</strong></p>
+
+<table class="table">
+  <thead><tr><th>Option</th><th>Votes</th><th>Percent</th></tr></thead>
+  <tbody>
+    {% for r in results %}
+      <tr>
+        <td>{{ r.text }}</td>
+        <td>{{ r.votes }}</td>
+        <td>{{ r.pct }}%</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<canvas id="chart" width="300" height="300" style="display: block; margin: 0 auto;"></canvas>
+
+<script>
+const dataLabels = [
+  {% for r in results %}"{{ r.text }}"{% if not forloop.last %},{% endif %}{% endfor %}
+];
+const dataValues = [
+  {% for r in results %}{{ r.votes }}{% if not forloop.last %},{% endif %}{% endfor %}
+];
+
+const ctx = document.getElementById('chart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: dataLabels,
+        datasets: [{
+            label: 'Votes',
+            data: dataValues,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)'
+            ],
+            borderColor: '#fff',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+</script>
+
+<a href="{% url 'polls:poll_list' %}" class="btn btn-link mt-3">Back to polls</a>
+{% endblock %}
